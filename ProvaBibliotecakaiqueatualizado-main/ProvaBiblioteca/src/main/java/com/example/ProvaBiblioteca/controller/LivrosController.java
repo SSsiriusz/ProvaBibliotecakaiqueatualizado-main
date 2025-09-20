@@ -1,12 +1,21 @@
 package com.example.ProvaBiblioteca.controller;
 
 import com.example.ProvaBiblioteca.model.LivrosModel;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.example.ProvaBiblioteca.servicer.LivrosService;
 import com.example.ProvaBiblioteca.repository.BibliotecaRepository;
 import com.example.ProvaBiblioteca.repository.LivrosRepository;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -58,5 +67,48 @@ public class LivrosController {
         return livrosService.buscarPorId(id)
                 .map(l -> ResponseEntity.ok(livrosService.alterarStatus(id, status)))
                 .orElse(ResponseEntity.notFound().build());
+    }
+    @GetMapping("/exportarLivros")
+    public ResponseEntity<byte[]> exportarLivros() {
+        List<LivrosModel> livros = livrosService.listar();
+
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Livros");
+
+            // Cabeçalhos
+            Row header = sheet.createRow(0);
+            header.createCell(0).setCellValue("ID");
+            header.createCell(1).setCellValue("Título");
+            header.createCell(2).setCellValue("Autor");
+            header.createCell(3).setCellValue("Gênero");
+            header.createCell(4).setCellValue("Status");
+            header.createCell(5).setCellValue("Data Cadastro");
+            header.createCell(6).setCellValue("ID Bibliotecário");
+
+            int rowNum = 1;
+            for (LivrosModel livro : livros) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(livro.getId());
+                row.createCell(1).setCellValue(livro.getTitulo());
+                row.createCell(2).setCellValue(livro.getAutor());
+                row.createCell(3).setCellValue(livro.getGenero());
+                row.createCell(4).setCellValue(livro.getStatus());
+                row.createCell(5).setCellValue(livro.getDataCadastro() != null ? livro.getDataCadastro().toString() : "");
+            }
+
+            workbook.write(bos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        byte[] bytes = bos.toByteArray();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", "livros.xlsx");
+        headers.setContentLength(bytes.length);
+
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
     }
 }
