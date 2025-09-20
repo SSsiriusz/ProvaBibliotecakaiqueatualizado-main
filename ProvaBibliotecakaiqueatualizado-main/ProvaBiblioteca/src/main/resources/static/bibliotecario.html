@@ -1,16 +1,18 @@
+<!-- static/templates/bibliotecario.html (ou dependendo de onde você renderiza seu HTML) -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Página Dinâmica com Tailwind</title>
+  <title>Cadastro de Bibliotecário</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-gray-100 min-h-screen">
 
- 
   <nav class="bg-gray-800 p-4">
     <div class="container mx-auto flex justify-between items-center">
-      <a class="text-white font-bold text-xl" href="#"></a>
+      <a class="text-white font-bold text-xl" href="#">Biblioteca</a>
       <div>
         <a class="text-gray-300 hover:text-white mx-2" href="#">Início</a>
       </div>
@@ -19,21 +21,21 @@
   </nav>
 
   <div class="container mx-auto mt-8 p-4">
-    <h2 class="text-2xl font-bold mb-4">Formulário de Cadastro Bibliotecario</h2>
+    <h2 class="text-2xl font-bold mb-4">Formulário de Cadastro Bibliotecário</h2>
     <form id="formCadastro" class="bg-white shadow-md rounded p-4">
       <input type="hidden" id="id" />
       <div class="mb-4">
         <label for="nome" class="block text-gray-700 font-bold mb-2">Nome</label>
-        <input type="text" id="nome" class="w-full px-3 py-2 border rounded" required>
+        <input type="text" id="nome" class="w-full px-3 py-2 border rounded" required />
       </div>
       <div class="mb-4">
         <label for="email" class="block text-gray-700 font-bold mb-2">E-mail</label>
-        <input type="email" id="email" class="w-full px-3 py-2 border rounded" required>
+        <input type="email" id="email" class="w-full px-3 py-2 border rounded" required />
       </div>
       <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" id="btnSalvar">Adicionar</button>
       <button type="button" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 hidden" id="btnCancelar">Cancelar</button>
     </form>
-    
+
     <h2 class="text-2xl font-bold mt-8 mb-4">Tabela de Cadastros</h2>
     <table class="w-full table-auto bg-white shadow-md rounded">
       <thead class="bg-gray-200">
@@ -44,13 +46,12 @@
         </tr>
       </thead>
       <tbody id="tabelaCorpo">
-    
+        <!-- Conteúdo dinâmico -->
       </tbody>
     </table>
   </div>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="/src/main/resources/javascript/bibliotecario.js"></script>
+  <!-- JS estático carregado corretamente -->
+  <script src="/javascript/bibliotecario.js"></script>
 </body>
 </html>

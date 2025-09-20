@@ -1,21 +1,23 @@
 package com.example.ProvaBiblioteca.servicer;
 
-import java.util.List;
-import java.util.Optional;
+import com.example.ProvaBiblioteca.model.BibliotecarioModel;
+import com.example.ProvaBiblioteca.repository.BibliotecaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.ProvaBiblioteca.model.BibliotecarioModel;
-import com.example.ProvaBiblioteca.repository.BibliotecaRepository;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BibliotecaServicer {
+
     @Autowired
     private BibliotecaRepository bibliotecaRepository;
-    
+
     public List<BibliotecarioModel> listar() {
         return bibliotecaRepository.findAll();
     }
+
     public BibliotecarioModel salvar(BibliotecarioModel bibliotecaModel) {
         return bibliotecaRepository.save(bibliotecaModel);
     }

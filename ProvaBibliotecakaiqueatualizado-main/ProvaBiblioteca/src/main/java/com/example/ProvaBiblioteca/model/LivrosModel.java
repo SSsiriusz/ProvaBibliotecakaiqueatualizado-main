@@ -1,11 +1,13 @@
 package com.example.ProvaBiblioteca.model;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "livro_model")
+@Table(name = "livro")
 public class LivrosModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,7 +31,7 @@ public class LivrosModel {
     @Column(nullable = false)
     private LocalDate dataCadastro;
 
-    // getters e setters
+    // Getters e Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
