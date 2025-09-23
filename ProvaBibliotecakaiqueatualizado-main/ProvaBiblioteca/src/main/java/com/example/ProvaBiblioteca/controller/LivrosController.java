@@ -13,37 +13,21 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("api/livros")
 public class LivrosController {
-
     private final LivrosService livrosService;
 
     public LivrosController(LivrosRepository livrosRepository, BibliotecaRepository bibliotecarioRepository) {
         this.livrosService = new LivrosService(livrosRepository);
     }
 
-    // Listar todos os livros
-    @GetMapping
-    public ResponseEntity<List<LivrosModel>> listar() {
-        return ResponseEntity.ok(livrosService.listar());
-    }
-
-    // Buscar livro por ID
-    @GetMapping("/{id}")
-    public ResponseEntity<LivrosModel> buscarPorId(@PathVariable Long id) {
-        return livrosService.buscarPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    // Cadastrar livro
     @PostMapping
     public ResponseEntity<LivrosModel> cadastrar(@RequestBody LivrosModel livro) {
         return ResponseEntity.ok(livrosService.cadastrar(livro));
     }
 
-    // Editar livro
     @PutMapping("/{id}")
     public ResponseEntity<LivrosModel> editar(@PathVariable Long id, @RequestBody LivrosModel livro) {
         return livrosService.buscarPorId(id)
@@ -51,7 +35,6 @@ public class LivrosController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Excluir livro
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         if (livrosService.buscarPorId(id).isPresent()) {
@@ -62,13 +45,26 @@ public class LivrosController {
         }
     }
 
-    // Alterar status
+    @GetMapping
+    public ResponseEntity<List<LivrosModel>> listar() {
+        return ResponseEntity.ok(livrosService.listar());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<LivrosModel> buscarPorId(@PathVariable Long id) {
+        return livrosService.buscarPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PatchMapping("/{id}/status")
     public ResponseEntity<LivrosModel> alterarStatus(@PathVariable Long id, @RequestParam String status) {
         return livrosService.buscarPorId(id)
                 .map(l -> ResponseEntity.ok(livrosService.alterarStatus(id, status)))
                 .orElse(ResponseEntity.notFound().build());
     }
+}
+
 
     // Exportar livros
     @GetMapping("/exportarLivros")

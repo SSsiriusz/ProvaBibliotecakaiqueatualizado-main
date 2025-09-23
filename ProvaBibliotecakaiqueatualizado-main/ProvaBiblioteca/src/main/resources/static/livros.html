@@ -1,56 +1,53 @@
-<!-- static/templates/livros.html (ou onde for que você renderiza) -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <title>Livros - Biblioteca</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- SweetAlert2 para notificações -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-gray-100 min-h-screen">
-
+    <!-- Menu de Navegação -->
     <nav class="bg-gray-800 p-4">
         <div class="container mx-auto flex justify-between items-center">
             <a class="text-white font-bold text-xl" href="#">Biblioteca</a>
             <div>
                 <a class="text-gray-300 hover:text-white mx-2" href="#">Início</a>
             </div>
-            <a class="text-gray-300 hover:text-white mx-1" href="#">Voltar</a>
         </div>
     </nav>
-
     <div class="container mx-auto mt-8 p-4">
         <h2 class="text-2xl font-bold mb-4">Cadastrar Livro</h2>
         <form id="livroForm" class="bg-white shadow-md rounded p-4 mb-8">
             <div class="mb-4">
                 <label class="block text-gray-700 font-bold mb-2">Título</label>
-                <input type="text" id="titulo" class="w-full px-3 py-2 border rounded" required />
+                <input type="text" id="titulo" class="w-full px-3 py-2 border rounded" required>
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 font-bold mb-2">Autor</label>
-                <input type="text" id="autor" class="w-full px-3 py-2 border rounded" required />
+                <input type="text" id="autor" class="w-full px-3 py-2 border rounded" required>
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 font-bold mb-2">Gênero</label>
-                <input type="text" id="genero" class="w-full px-3 py-2 border rounded" required />
+                <input type="text" id="genero" class="w-full px-3 py-2 border rounded" required>
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 font-bold mb-2">Bibliotecário</label>
-                <select id="bibliotecario_id" class="w-full px-3 py-2 border rounded" required>
-                    <!-- opções preenchidas dinamicamente -->
-                </select>
+                <select id="bibliotecario_id" class="w-full px-3 py-2 border rounded" required></select>
             </div>
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Cadastrar</button>
         </form>
-
         <h2 class="text-2xl font-bold mb-4">Livros Cadastrados</h2>
-
         <div class="flex flex-wrap gap-2 mb-4">
-            <button onclick="atualizarListaLivros()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Atualizar Lista</button>
+            <button onclick="atualizarLista()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Atualizar Lista</button>
+            <button onclick="backupBanco()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Backup Banco</button>
+            <button onclick="restaurarBanco()" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Restaurar Banco</button>
             <button onclick="exportarDados()" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600">Exportar Dados</button>
+            <button onclick="importarDados()" class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600">Importar Dados</button>
         </div>
-
         <div class="overflow-x-auto">
             <table class="w-full table-auto bg-white shadow-md rounded">
                 <thead class="bg-gray-200">
@@ -61,17 +58,15 @@
                         <th class="px-4 py-2">Gênero</th>
                         <th class="px-4 py-2">Status</th>
                         <th class="px-4 py-2">Data Cadastro</th>
-                        <th class="px-4 py-2">Bibliotecário</th>
+                        <th class="px-4 py-2">ID Bibliotecário</th>
                         <th class="px-4 py-2">Ações</th>
                     </tr>
                 </thead>
                 <tbody id="livrosTableBody">
-                    <!-- conteúdo dinâmico -->
+                    <!-- Linhas dinâmicas aqui -->
                 </tbody>
             </table>
         </div>
-    </div>
+        <script>src ="javascript/livros.js"</script>
 
-    <script src="/javascript/livros.js"></script>
-</body>
-</html>
+    </div>

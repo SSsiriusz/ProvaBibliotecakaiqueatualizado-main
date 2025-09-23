@@ -7,39 +7,31 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/bibliotecario")
-public class BibliotecaController {
+@RequestMapping("api/bibliotecario")
+public class BilbliotecaController {
 
     @Autowired
-    private BibliotecaServicer bibliotecaServicer;
+    private BibliotecaServicer BibliotecaServicer;
 
     @GetMapping
     public List<BibliotecarioModel> listar() {
-        return bibliotecaServicer.listar();
-    }
-
-    @GetMapping("/{id}")
-    public BibliotecarioModel buscarPorId(@PathVariable Long id) {
-        return bibliotecaServicer.listar()
-                .stream()
-                .filter(b -> b.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+        return BibliotecaServicer.listar();
     }
 
     @PostMapping
-    public BibliotecarioModel salvar(@RequestBody BibliotecarioModel bibliotecario) {
-        return bibliotecaServicer.salvar(bibliotecario);
+    public BibliotecarioModel salvar(@RequestBody BibliotecarioModel biblioteca) {
+        return BibliotecaServicer.salvar(biblioteca);
     }
 
     @PutMapping("/{id}")
-    public BibliotecarioModel atualizar(@PathVariable Long id, @RequestBody BibliotecarioModel bibliotecario) {
-        return bibliotecaServicer.atualizar(id, bibliotecario);
+    public BibliotecarioModel atualizar(@PathVariable Long id, @RequestBody BibliotecarioModel biblioteca) {
+        return BibliotecaServicer.atualizar(id, biblioteca);
     }
 
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
-        bibliotecaServicer.deletar(id);
+        BibliotecaServicer.deletar(id);
     }
 }
